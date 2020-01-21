@@ -13,15 +13,15 @@ instance ToMarkup T.Resist where
 
 instance ToMarkup CommonElement where
   toMarkup t = html $ do
-    h3 ! class_ (groupAttr $ T.group t) $ toHtml $ T.symbol t
+    eSym ! class_ (groupAttr $ T.group t) $ toHtml $ T.symbol t
     div ! class_ (stringValue "mass-resist") $ do
       div ! class_ (stringValue "mass") $ toHtml $ T.mass t 
       div ! class_ (stringValue "resist") $ toHtml $ T.resist t
-    h4 $ toHtml $ T.name t
+    eName $ toHtml $ T.name t
 
 instance ToMarkup Element where
   toMarkup (Element e) = toMarkup e
-  toMarkup HSpecial = html $ h3 $ toHtml "{H}"
+  toMarkup HSpecial = html $ eSym $ toHtml "{H}"
   toMarkup HigherOxyde = html $ toHtml "HigherOxydePlaceholder"
   toMarkup HydroCompound = html $ toHtml "HydroCompoundPlaceholder"
   toMarkup Placeholder = html $ toHtml "%"
@@ -39,10 +39,16 @@ page = docTypeHtml $ do
         tr $ do
           Lib.period r $ forM_ row $ \t -> td ! elemClass t $ toHtml t
 
+eSym :: Html -> Html
+eSym = div ! class_ (stringValue "symbol")
+
+eName :: Html -> Html
+eName = div ! class_ (stringValue "name")
+
 css :: Html
 css = toHtml $ "h1,h2,h4{text-align:left} table,th,td{border:1px solid black}\
-                \table{display:block;align:center;width:70%;height:30vw;overflow-y:scroll}\
-                \td{padding-right:10%;width:10%;height:7%}\
+                \body{width:90vmax;height:90vmin}\
+                \table{display:block;align:center;max-width:85%;max-height:85%;overflow-y:scroll}\
                 \.mass-resist{display:grid;grid-template-columns:1fr 1fr}\
                 \.mass{text-align:left}.resist{text-align:right}\
                 \.sconfgroup{background-color:#fb81ad}.pconfgroup{background-color:#efdb78}\
@@ -79,7 +85,7 @@ rowIndices = [N "1" Sn, N "2" Sn, N "3" Sn, N "4" (Wd 2), U, N "5" (Wd 2), U, N 
 period :: Row -> Html -> Html
 period r h = case r of
     U -> h
-    N n (Wd i) -> periodWideImpl (show n) i
-    N n _ -> periodSingleImpl (show n)
+    N n (Wd i) -> periodWideImpl n i
+    N n _ -> periodSingleImpl n
   where periodWideImpl n i = (th ! (rowspan $ stringValue $ show i) $ toHtml n) >> h
         periodSingleImpl n = (th $ toHtml n) >> h
