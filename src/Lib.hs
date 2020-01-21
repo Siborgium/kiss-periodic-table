@@ -21,13 +21,13 @@ instance ToMarkup CommonElement where
 
 instance ToMarkup Element where
   toMarkup (Element e) = toMarkup e
-  toMarkup HSpecial = html $ eSym $ toHtml "{H}"
-  toMarkup (Ro n m) = html $ eSym $ do
+  toMarkup HSpecial = html $ eSpec $ toHtml "{H}"
+  toMarkup (Ro n m) = html $ eSpec $ do
     toHtml "R"
     sub $ toHtml $ if n == 1 then "" else show n
     toHtml "O"
     sub $ toHtml $ if m == 1 then "" else show m
-  toMarkup HydroCompound = html $ eSym $ toHtml "RnHm"
+  toMarkup HydroCompound = html $ eSpec $ toHtml "RnHm"
   toMarkup Placeholder = html $ toHtml "%"
   toMarkup Empty = html $ toHtml ""
 
@@ -50,6 +50,9 @@ eSym = div ! class_ (stringValue "symbol")
 eName :: Html -> Html
 eName = div ! class_ (stringValue "name")
 
+eSpec :: Html -> Html
+eSpec = div ! class_ (stringValue "spec")
+
 css :: Html
 css = toHtml $ "html{font:small sans-serif}\
                 \h1,h2,h4{text-align:left}\
@@ -61,10 +64,12 @@ css = toHtml $ "html{font:small sans-serif}\
                 \.sconfgroup{background-color:#fb81ad}.pconfgroup{background-color:#efdb78}\
                 \.dconfgroup{background-color:#82c9f9}.fconfgroup{background-color:#ac86bf}\
                 \.groupleft{text-align:left}.groupright{text-align:right}\
-                \.symbol{font-weight:bold;font-size:normal;}"
+                \.symbol{font-weight:bold;font-size:normal;}\
+                \.spec{font-weight:bold;font-size:normal;text-align:center}"
 
 elemClass :: Element -> Attribute
 elemClass (Element t) = class_ (confAttr $ T.conf t)
+elemClass HSpecial = class_ (stringValue "sconfgroup")
 elemClass _ = class_ $ stringValue "placeholderClass"
 
 confAttr :: ValentElectrons -> AttributeValue
