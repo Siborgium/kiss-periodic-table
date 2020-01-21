@@ -13,15 +13,15 @@ instance ToMarkup T.Resist where
 
 instance ToMarkup CommonElement where
   toMarkup t = html $ do
-    h1 ! class_ (groupAttr $ T.group t) $ toHtml $ T.symbol t
+    h3 ! class_ (groupAttr $ T.group t) $ toHtml $ T.symbol t
     div ! class_ (stringValue "mass-resist") $ do
       div ! class_ (stringValue "mass") $ toHtml $ T.mass t 
       div ! class_ (stringValue "resist") $ toHtml $ T.resist t
-    p $ toHtml $ T.name t
+    h4 $ toHtml $ T.name t
 
 instance ToMarkup Element where
   toMarkup (Element e) = toMarkup e
-  toMarkup HSpecial = html $ h1 $ toHtml "{H}"
+  toMarkup HSpecial = html $ h3 $ toHtml "{H}"
   toMarkup HigherOxyde = html $ toHtml "HigherOxydePlaceholder"
   toMarkup HydroCompound = html $ toHtml "HydroCompoundPlaceholder"
   toMarkup Placeholder = html $ toHtml "%"
@@ -35,14 +35,16 @@ page = docTypeHtml $ do
     h2 $ toHtml "Periodic table"
     H.table $ do
       tr $ (th $ toHtml "") >> forM_ groups groupName -- draw groups
-      forM_ (zip T.table periods) $ \(row, p) -> do
+      forM_ (zip T.table rowIndices) $ \(row, r) -> do
         tr $ do
-          th $ toHtml p
-          forM_ row (td . toHtml)
+          Lib.period r $ forM_ row $ \t -> td ! elemClass t $ toHtml t
 
 css :: Html
-css = toHtml $ "h1{align:center} table,th,td{border:1px solid black} table{width:60%}\
-                \.mass-resist{width:100%}.mass{text-align:left}.resist{text-align:right}\
+css = toHtml $ "h1,h2,h4{text-align:left} table,th,td{border:1px solid black}\
+                \table{display:block;align:center;width:70%;height:30vw;overflow-y:scroll}\
+                \td{padding-right:10%;width:10%;height:7%}\
+                \.mass-resist{display:grid;grid-template-columns:1fr 1fr}\
+                \.mass{text-align:left}.resist{text-align:right}\
                 \.sconfgroup{background-color:#fb81ad}.pconfgroup{background-color:#efdb78}\
                 \.dconfgroup{background-color:#82c9f9}.fconfgroup{background-color:#ac86bf}\
                 \.groupleft{text-align:left}.groupright{text-align:right}"
@@ -61,15 +63,23 @@ groupAttr :: Group -> AttributeValue
 groupAttr (Group n A) = stringValue $ "groupleft"
 groupAttr (Group n B) = stringValue $ "groupright"
 
-groupName :: Int -> Html
-groupName g = (if g == 8 then th ! (colspan $ stringValue "3") else th) $ toHtml $ "A " ++ (show g) ++ " B"
+groupName :: (Int, String) -> Html
+groupName (g, n) = (if g == 8 then th ! (colspan $ stringValue "3") else th) $ toHtml $ "A " ++ n ++ " B"
 
-groups :: [Int]
-groups = [1..8]
+groups :: [(Int, String)]
+groups = zip [1..8] ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"]
 
-periods :: [Html]
-periods = Prelude.map (toHtml . \p -> (if p <= 7 then show else periodsImpl) p) [1..11]
-  where periodsImpl 8 = "Higher oxydes"
-        periodsImpl 9 = "Hydrogen compounds"
-        periodsImpl 10 = "Lantanoids"
-        periodsImpl 11 = "Actinoids"
+
+data RowStyle = Wd Int | Sn
+data Row = N String RowStyle | U
+
+rowIndices :: [Row]
+rowIndices = [N "1" Sn, N "2" Sn, N "3" Sn, N "4" (Wd 2), U, N "5" (Wd 2), U, N "6" (Wd 2), U, N "7" (Wd 2), U, N "Higher oxydes" Sn, N "Hydrogen compounds" Sn, N "Lantanoids" Sn, N "Actinoids" Sn]
+
+period :: Row -> Html -> Html
+period r h = case r of
+    U -> h
+    N n (Wd i) -> periodWideImpl (show n) i
+    N n _ -> periodSingleImpl (show n)
+  where periodWideImpl n i = (th ! (rowspan $ stringValue $ show i) $ toHtml n) >> h
+        periodSingleImpl n = (th $ toHtml n) >> h

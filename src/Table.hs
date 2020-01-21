@@ -32,15 +32,19 @@ data Element = Element CommonElement | HSpecial | HigherOxyde | HydroCompound | 
 table :: [[Element]]
 table = [[ hydrogen, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, hspecial, helium ],
          [ lithium, Placeholder, bohr],
-         [ Placeholder,Placeholder,Placeholder,Placeholder, Placeholder, Placeholder, Placeholder, hspecial, hspecial, hspecial],
-         [],
-         [],
-         [],
-         [],
-         [],
-         [],
-         [],
-         []]
+         [ natrium,Placeholder,Placeholder,Placeholder, Placeholder, Placeholder, Placeholder, hspecial, hspecial, hspecial],
+         [ potassium],
+         [copper],
+         [hspecial],
+         [hspecial],
+         [hspecial],
+         [hspecial],
+         [hspecial],
+         [hspecial],
+         [hspecial],
+         [hspecial],
+         [hspecial],
+         [hspecial]]
         
 
 hspecial = HSpecial
@@ -58,7 +62,7 @@ hydrogen = Element $ CommonElement {
      , resist = Exactly 0.98
    }
 helium = Element $ CommonElement {
-      number = 2
+       number = 2
      , symbol = "He"
      , name = "Helium"
      , desc = "N/A"
@@ -70,7 +74,7 @@ helium = Element $ CommonElement {
      , resist = Unknown
    }
 lithium = Element $ CommonElement {
-     number = 3
+      number = 3
     , symbol = "Li"
     , name = "Lithium"
     , desc = "N/A"
@@ -81,8 +85,44 @@ lithium = Element $ CommonElement {
     , mass = 6.9
     , resist = Exactly 0.98
   }
+natrium = Element $ CommonElement {
+      number = 11
+    , symbol = "Na"
+    , name = "Natrium"
+    , desc = "N/A"
+    , conf = S
+    , group = Group 1 A
+    , period = Period 3
+    , radius = Angstrem 2.27
+    , mass = 23.0
+    , resist = Exactly 0.98
+  }
+potassium = Element $ CommonElement {
+      number = 19
+    , symbol = "K"
+    , name = "Potassium"
+    , desc = "N/A"
+    , conf = S
+    , group = Group 1 A
+    , period = Period 4
+    , radius = Angstrem 2.8
+    , mass = 39.1
+    , resist = Exactly 0.82
+  }
+copper = Element $ CommonElement {
+      number = 29
+    , symbol = "Cu"
+    , name = "Copper"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 1 B
+    , period = Period 4
+    , radius = Angstrem 1.4
+    , mass = 1.90
+    , resist = Exactly 63.5
+  }
 bohr = Element $ CommonElement {
-     number = 5
+      number = 5
     , symbol = "B"
     , name = "Bohr"
     , desc = "N/A"
