@@ -15,16 +15,21 @@ instance ToMarkup CommonElement where
   toMarkup t = html $ do
     eSym ! class_ (groupAttr $ T.group t) $ toHtml $ T.symbol t
     div ! class_ (stringValue "mass-resist") $ do
-      div ! class_ (stringValue "mass") $ toHtml $ T.mass t 
+      div ! class_ (stringValue "mass") $ toHtml $ show $ T.mass t 
       div ! class_ (stringValue "resist") $ toHtml $ T.resist t
     eName $ toHtml $ T.name t
 
 instance ToMarkup Element where
   toMarkup (Element e) = toMarkup e
   toMarkup HSpecial = html $ eSym $ toHtml "{H}"
-  toMarkup HigherOxyde = html $ toHtml "HigherOxydePlaceholder"
-  toMarkup HydroCompound = html $ toHtml "HydroCompoundPlaceholder"
+  toMarkup (Ro n m) = html $ eSym $ do
+    toHtml "R"
+    sub $ toHtml $ if n == 1 then "" else show n
+    toHtml "O"
+    sub $ toHtml $ if m == 1 then "" else show m
+  toMarkup HydroCompound = html $ eSym $ toHtml "RnHm"
   toMarkup Placeholder = html $ toHtml "%"
+  toMarkup Empty = html $ toHtml ""
 
 page :: Html
 page = docTypeHtml $ do
@@ -46,14 +51,17 @@ eName :: Html -> Html
 eName = div ! class_ (stringValue "name")
 
 css :: Html
-css = toHtml $ "h1,h2,h4{text-align:left} table,th,td{border:1px solid black}\
-                \body{width:90vmax;height:90vmin}\
-                \table{display:block;align:center;max-width:85%;max-height:85%;overflow-y:scroll}\
-                \.mass-resist{display:grid;grid-template-columns:1fr 1fr}\
+css = toHtml $ "html{font:small sans-serif}\
+                \h1,h2,h4{text-align:left}\
+                \th,td{min-width:9%;border:1px solid black;}\
+                \body{width:90vmax;height:100vmin}\
+                \table{display:block;align:center;max-width:90%;max-height:90%;border-collapse:collapse;}\
+                \.mass-resist{display:grid;grid-template-columns:1fr 1fr;font-size:small}\
                 \.mass{text-align:left}.resist{text-align:right}\
                 \.sconfgroup{background-color:#fb81ad}.pconfgroup{background-color:#efdb78}\
                 \.dconfgroup{background-color:#82c9f9}.fconfgroup{background-color:#ac86bf}\
-                \.groupleft{text-align:left}.groupright{text-align:right}"
+                \.groupleft{text-align:left}.groupright{text-align:right}\
+                \.symbol{font-weight:bold;font-size:normal;}"
 
 elemClass :: Element -> Attribute
 elemClass (Element t) = class_ (confAttr $ T.conf t)
