@@ -94,7 +94,7 @@ data RowStyle = Wd Int | Sn
 data Row = N String RowStyle | U
 
 rowIndices :: [Row]
-rowIndices = [N "1" Sn, N "2" Sn, N "3" Sn, N "4" (Wd 2), U, N "5" (Wd 2), U, N "6" (Wd 2), U, N "7" (Wd 2), U, N "Higher oxydes" Sn, N "Hydrogen compounds" Sn, N "Lantanoids" Sn, N "Actinoids" Sn]
+rowIndices = [N "1" Sn, N "2" Sn, N "3" Sn, N "4" (Wd 2), U, N "5" (Wd 2), U, N "6" (Wd 2), U, N "7" (Wd 2), U, N "Higher oxydes" Sn, N "Hydrogen compounds" Sn, N "Lanthanides" Sn, N "Actinides" Sn]
 
 period :: Row -> Html -> Html
 period r h = case r of
