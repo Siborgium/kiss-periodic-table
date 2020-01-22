@@ -6,7 +6,8 @@ import Prelude hiding (div)
 import Text.Blaze.Html5 as H
 import Text.Blaze.Html5.Attributes as A
 
-import Table as T
+import Elements as T
+import Table(table)
 
 instance ToMarkup T.Resist where
   toMarkup t = html $ toHtml $ show t
@@ -40,7 +41,7 @@ page = docTypeHtml $ do
     h2 $ toHtml "Periodic table"
     H.table $ do
       tr $ (th $ toHtml "") >> forM_ groups groupName -- draw groups
-      forM_ (zip T.table rowIndices) $ \(row, r) -> do
+      forM_ (zip Table.table rowIndices) $ \(row, r) -> do
         tr $ do
           Lib.period r $ forM_ row $ \t -> td ! elemClass t $ toHtml t
 

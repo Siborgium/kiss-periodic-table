@@ -24,7 +24,6 @@ dependencies:
 - blaze-html
 - blaze-markup
 - bytestring
-- sort
 
 library:
   source-dirs: src
