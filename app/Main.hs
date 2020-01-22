@@ -1,7 +1,7 @@
 module Main where
 
-import Data.ByteString.Lazy(writeFile)
-import Lib
+import Data.ByteString.Lazy (writeFile)
+import Page (page)
 import Prelude hiding (writeFile)
 import System.Environment(getArgs)
 import System.IO(IOMode(WriteMode), withFile)
@@ -11,4 +11,4 @@ main :: IO ()
 main = do
   [p] <- getArgs
   putStrLn $ "Writing to " ++ p
-  writeFile p $ renderMarkup $ Lib.page
+  writeFile p $ renderMarkup $ page

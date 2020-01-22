@@ -1,5 +1,5 @@
 
-module Lib where
+module Page where
 
 import Control.Monad (forM_)
 import Prelude hiding (div)
@@ -43,7 +43,7 @@ page = docTypeHtml $ do
       tr $ (th $ toHtml "") >> forM_ groups groupName -- draw groups
       forM_ (zip Table.table rowIndices) $ \(row, r) -> do
         tr $ do
-          Lib.period r $ forM_ row $ \t -> td ! elemClass t $ toHtml t
+          Page.period r $ forM_ row $ \t -> td ! elemClass t $ toHtml t
 
 eSym :: Html -> Html
 eSym = div ! class_ (stringValue "symbol")
