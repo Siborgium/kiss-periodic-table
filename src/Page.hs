@@ -9,29 +9,6 @@ import Text.Blaze.Html5.Attributes as A
 import Elements as T
 import Table(actinides, lanthanides, table) 
 
-instance ToMarkup T.Resist where
-  toMarkup t = html $ toHtml $ show t
-
-instance ToMarkup CommonElement where
-  toMarkup t = html $ do
-    eSym ! class_ (groupAttr $ T.group t) $ toHtml $ T.symbol t
-    div ! class_ (stringValue "mass-resist") $ do
-      div ! class_ (stringValue "mass") $ toHtml $ show $ T.mass t 
-      div ! class_ (stringValue "resist") $ toHtml $ T.resist t
-    eName $ toHtml $ T.name t
-
-instance ToMarkup Element where
-  toMarkup (Element e) = toMarkup e
-  toMarkup HSpecial = html $ eSpec $ toHtml "{H}"
-  toMarkup (Ro n m) = html $ eSpec $ do
-    toHtml "R"
-    sub $ toHtml $ if n == 1 then "" else show n
-    toHtml "O"
-    sub $ toHtml $ if m == 1 then "" else show m
-  toMarkup HydroCompound = html $ eSpec $ toHtml "RnHm"
-  toMarkup Placeholder = html $ toHtml "%"
-  toMarkup Empty = html $ toHtml ""
-
 page :: Html
 page = docTypeHtml $ do
   H.head $ do
@@ -41,19 +18,22 @@ page = docTypeHtml $ do
     h2 $ toHtml "Periodic table"
     H.table $ do
       tr $ do
-        th $ toHtml ""
+        rowHead ""
         forM_ groups groupName -- draw groups
       forM_ (zip Table.table rowIndices) $ \(row, r) -> do
-        tr $ do
-          Page.period r $ forM_ row $ \t -> td ! elemClass t $ toHtml t
+        tr $ Page.period r $ rowData row
     br
     H.table $ do
-      tr $ do
-        th $ toHtml "Lanthanides"
-        forM_ lanthanides $ \t -> td ! elemClass t $ toHtml t
-      tr $ do
-        th $ toHtml "Actinides"
-        forM_ actinides $ \t -> td ! elemClass t $ toHtml t
+      row "Lanthanides" lanthanides
+      row "Actinides" actinides 
+
+row h d = tr $ (rowHead h >> rowData d)
+
+rowHead :: String -> Html
+rowHead = th . toHtml
+
+rowData :: [Element] -> Html
+rowData d = forM_ d $ \t -> td ! elemClass t $ toHtml t
 
 eSym :: Html -> Html
 eSym = div ! class_ (stringValue "symbol")
@@ -106,7 +86,7 @@ data RowStyle = Wd Int | Sn
 data Row = N String RowStyle | U
 
 rowIndices :: [Row]
-rowIndices = [N "1" Sn, N "2" Sn, N "3" Sn, N "4" (Wd 2), U, N "5" (Wd 2), U, N "6" (Wd 2), U, N "7" (Wd 2), U, N "Higher oxydes" Sn, N "Hydrogen compounds" Sn, N "Lanthanides" Sn, N "Actinides" Sn]
+rowIndices = [N "1" Sn, N "2" Sn, N "3" Sn, N "4" (Wd 2), U, N "5" (Wd 2), U, N "6" (Wd 2), U, N "7" (Wd 2), U, N "Higher oxydes" Sn, N "Hydrogen compounds" Sn]
 
 period :: Row -> Html -> Html
 period r h = case r of
@@ -115,3 +95,28 @@ period r h = case r of
     N n _ -> periodSingleImpl n
   where periodWideImpl n i = (th ! (rowspan $ stringValue $ show i) $ toHtml n) >> h
         periodSingleImpl n = (th $ toHtml n) >> h
+
+instance ToMarkup T.Resist where
+  toMarkup t = html $ toHtml $ show t
+
+instance ToMarkup CommonElement where
+  toMarkup t = html $ do
+    eSym ! class_ (groupAttr $ T.group t) $ toHtml $ T.symbol t
+    div ! class_ (stringValue "mass-resist") $ do
+      div ! class_ (stringValue "mass") $ toHtml $ show $ T.mass t 
+      div ! class_ (stringValue "resist") $ toHtml $ T.resist t
+    eName $ toHtml $ T.name t
+
+instance ToMarkup Element where
+  toMarkup (Element e) = toMarkup e
+  toMarkup HSpecial = html $ eSpec $ toHtml "{H}"
+  toMarkup (Ro n m) = html $ eSpec $ do
+    toHtml "R"
+    sub $ toHtml $ if n == 1 then "" else show n
+    toHtml "O"
+    sub $ toHtml $ if m == 1 then "" else show m
+  toMarkup HydroCompound = html $ eSpec $ toHtml "RnHm"
+  toMarkup Placeholder = html $ toHtml "%"
+  toMarkup Empty = html $ toHtml ""
+
+
