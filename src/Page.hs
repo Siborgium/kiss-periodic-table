@@ -7,7 +7,7 @@ import Text.Blaze.Html5 as H
 import Text.Blaze.Html5.Attributes as A
 
 import Elements as T
-import Table(table)
+import Table(actinides, lanthanides, table) 
 
 instance ToMarkup T.Resist where
   toMarkup t = html $ toHtml $ show t
@@ -40,10 +40,20 @@ page = docTypeHtml $ do
   body $ do
     h2 $ toHtml "Periodic table"
     H.table $ do
-      tr $ (th $ toHtml "") >> forM_ groups groupName -- draw groups
+      tr $ do
+        th $ toHtml ""
+        forM_ groups groupName -- draw groups
       forM_ (zip Table.table rowIndices) $ \(row, r) -> do
         tr $ do
           Page.period r $ forM_ row $ \t -> td ! elemClass t $ toHtml t
+    br
+    H.table $ do
+      tr $ do
+        th $ toHtml "Lanthanides"
+        forM_ lanthanides $ \t -> td ! elemClass t $ toHtml t
+      tr $ do
+        th $ toHtml "Actinides"
+        forM_ actinides $ \t -> td ! elemClass t $ toHtml t
 
 eSym :: Html -> Html
 eSym = div ! class_ (stringValue "symbol")
@@ -57,7 +67,9 @@ eSpec = div ! class_ (stringValue "spec")
 css :: Html
 css = toHtml $ "html{font:small sans-serif}\
                 \h1,h2,h4{text-align:left}\
-                \th,td{min-width:9%;border:1px solid black;}\
+                \th,td{border:1px solid black;}\
+                \td{min-width:5%}\
+                \th{min-width:5%}\
                 \body{width:90vmax;height:100vmin}\
                 \table{display:block;align:center;max-width:90%;max-height:90%;border-collapse:collapse;}\
                 \.mass-resist{display:grid;grid-template-columns:1fr 1fr;font-size:small}\

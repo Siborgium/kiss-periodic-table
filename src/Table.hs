@@ -16,7 +16,7 @@ table = [[ hydrogen, Empty, Empty, Empty, Empty, Empty, hspecial, helium ],
          [francium, radium, Placeholder,Placeholder, Placeholder, Placeholder, Placeholder],
          [roentgenium, copernicium, Placeholder,Placeholder, Placeholder, Placeholder, Placeholder],
          [(Ro 2 1), (Ro 1 1), (Ro 2 3), (Ro 1 2), (Ro 2 5), (Ro 1 3), (Ro 2 7), (Ro 1 4)],
-         [HydroCompound],
-         [cerium],
-         [thorium]]
-        
+         [HydroCompound]]
+
+lanthanides = [cerium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder];
+actinides = [thorium];
