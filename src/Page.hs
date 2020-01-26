@@ -50,8 +50,7 @@ css = toHtml $ "html{font:small sans-serif}\
                 \th,td{border:1px solid black;}\
                 \td{min-width:5%}\
                 \th{min-width:5%}\
-                \body{width:90vmax;height:100vmin}\
-                \table{display:block;align:center;max-width:90%;max-height:90%;border-collapse:collapse;}\
+                \table{display:block;align:center;max-width:70%;max-height:70%;border-collapse:collapse;}\
                 \.mass-resist{display:grid;grid-template-columns:1fr 1fr;font-size:small}\
                 \.mass{text-align:left}.resist{text-align:right}\
                 \.sconfgroup{background-color:#fb81ad}.pconfgroup{background-color:#efdb78}\
