@@ -9,6 +9,7 @@ import Text.Blaze.Renderer.Utf8 (renderMarkup)
 
 main :: IO ()
 main = do
-  [p] <- getArgs
+  args <- getArgs
+  let p = if null args then "index.html" else head args
   putStrLn $ "Writing to " ++ p
   writeFile p $ renderMarkup $ page

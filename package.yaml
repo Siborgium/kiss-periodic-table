@@ -1,23 +1,36 @@
-name:                PeriodicTable
+
+# Copyright 2020 Sergey Smirnykh
+
+# This file is part of kiss-periodic-table
+
+# kiss-periodic-table is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# kiss-periodic-table is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with kiss-periodic-table. If not, see <https:# www.gnu.org/licenses/>.
+
+name:                kiss-periodic-table
 version:             0.1.0.0
-github:              "githubuser/PeriodicTable"
-license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2020 Author name here"
+github:              "Siborgium/kiss-periodic-table"
+license:             GPL-3
+author:              "Sergey Smirnykh"
+maintainer:          "Sergey Smirnykh"
+copyright:           "2020 Sergey Smirnykh"
 
 extra-source-files:
 - README.md
-- ChangeLog.md
 
-# Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Web
+synopsis:            KISS periodic table in pure HTML + CSS
+category:            Web
 
-# To avoid duplicated efforts in documentation and dealing with the
-# complications of embedding Haddock markup inside cabal files, it is
-# common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/PeriodicTable#readme>
+description:         Please see the README on GitHub at <https://github.com/Siborgium/kiss-periodic-table#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -29,7 +42,7 @@ library:
   source-dirs: src
 
 executables:
-  PeriodicTable-exe:
+  kiss-periodic-table:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -37,15 +50,4 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - PeriodicTable
-
-tests:
-  PeriodicTable-test:
-    main:                Spec.hs
-    source-dirs:         test
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - PeriodicTable
+    - kiss-periodic-table
