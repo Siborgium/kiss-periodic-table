@@ -46,17 +46,18 @@ eSpec = div ! class_ (stringValue "spec")
 
 css :: Html
 css = toHtml $ "html{font:small sans-serif}\
-                \h1,h2,h4{text-align:left}\
                 \th,td{border:1px solid black;}\
                 \td{min-width:5%}\
                 \th{min-width:5%}\
                 \table{display:block;align:center;max-width:70%;max-height:70%;border-collapse:collapse;}\
                 \.mass-resist{display:grid;grid-template-columns:1fr 1fr;font-size:small}\
-                \.mass{text-align:left}.resist{text-align:right}\
+                \.mass{text-align:left}\
+                \.resist{text-align:right}\
+                \.symbol-number{display:grid;grid-template-columns:1fr 1fr;font-size:small;\
+                \font-weight:bold;font-size:medium}\
                 \.sconfgroup{background-color:#fb81ad}.pconfgroup{background-color:#efdb78}\
                 \.dconfgroup{background-color:#82c9f9}.fconfgroup{background-color:#ac86bf}\
                 \.groupleft{text-align:left}.groupright{text-align:right}\
-                \.symbol{font-weight:bold;font-size:normal;}\
                 \.spec{font-weight:bold;font-size:normal;text-align:center}"
 
 elemClass :: Element -> Attribute
@@ -100,11 +101,20 @@ instance ToMarkup T.Resist where
 
 instance ToMarkup CommonElement where
   toMarkup t = html $ do
-    eSym ! class_ (groupAttr $ T.group t) $ toHtml $ T.symbol t
+    div ! class_ (stringValue "symbol-number") $ markCommonElemTitle t
     div ! class_ (stringValue "mass-resist") $ do
       div ! class_ (stringValue "mass") $ toHtml $ show $ T.mass t 
       div ! class_ (stringValue "resist") $ toHtml $ T.resist t
     eName $ toHtml $ T.name t
+
+markCommonElemTitle :: CommonElement -> Html
+markCommonElemTitle e = implMark (T.group e) (T.symbol e, show $ T.number e)
+  where implMark g d = do
+          let (a, b) = flipGroup g d
+          div ! class_ (stringValue "groupleft") $ toHtml a
+          div ! class_ (stringValue "groupright") $ toHtml b
+        flipGroup (Group _ A) x = x
+        flipGroup (Group _ B) (x, y) = (y, x)
 
 instance ToMarkup Element where
   toMarkup (Element e) = toMarkup e
