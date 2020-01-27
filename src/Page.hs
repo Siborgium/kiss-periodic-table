@@ -2,7 +2,7 @@
 module Page where
 
 import Control.Monad (forM_)
-import Prelude hiding (div)
+import Prelude hiding (div, span)
 import Text.Blaze.Html5 as H
 import Text.Blaze.Html5.Attributes as A
 
@@ -46,14 +46,13 @@ eSpec = div ! class_ (stringValue "spec")
 
 css :: Html
 css = toHtml $ "html{font:small sans-serif}\
-                \th,td{border:1px solid black;}\
-                \td{min-width:5%}\
-                \th{min-width:5%}\
+                \th,td{border:1px solid black;min-width:5%}\
                 \table{display:block;align:center;max-width:70%;max-height:70%;border-collapse:collapse;}\
                 \.mass-resist{display:grid;grid-template-columns:1fr 1fr;font-size:small}\
                 \.mass{text-align:left}\
                 \.resist{text-align:right}\
-                \.symbol-number{display:grid;grid-template-columns:1fr 1fr;font-size:small;\
+                \.number{font-size:0.8em}\
+                \.symbol-number{display:grid;grid-template-columns:1fr 1fr;\
                 \font-weight:bold;font-size:medium}\
                 \.sconfgroup{background-color:#fb81ad}.pconfgroup{background-color:#efdb78}\
                 \.dconfgroup{background-color:#82c9f9}.fconfgroup{background-color:#ac86bf}\
@@ -70,10 +69,6 @@ confAttr v = case v of S -> stringValue "sconfgroup"
                        P -> stringValue "pconfgroup"
                        D -> stringValue "dconfgroup"
                        F -> stringValue "fconfgroup"
-
-groupAttr :: Group -> AttributeValue
-groupAttr (Group n A) = stringValue $ "groupleft"
-groupAttr (Group n B) = stringValue $ "groupright"
 
 groupName :: (Int, String) -> Html
 groupName (g, n) = (if g == 8 then th ! (colspan $ stringValue "3") else th) $ toHtml $ "A " ++ n ++ " B"
@@ -108,11 +103,13 @@ instance ToMarkup CommonElement where
     eName $ toHtml $ T.name t
 
 markCommonElemTitle :: CommonElement -> Html
-markCommonElemTitle e = implMark (T.group e) (T.symbol e, show $ T.number e)
-  where implMark g d = do
-          let (a, b) = flipGroup g d
-          div ! class_ (stringValue "groupleft") $ toHtml a
-          div ! class_ (stringValue "groupright") $ toHtml b
+markCommonElemTitle e = implMark (T.group e) (T.symbol e, T.number e)
+  where implMark g (s_, n_) = do
+          let s = toHtml s_
+          let n = H.span ! class_ (stringValue "number") $ toHtml n_
+          let (a, b) = flipGroup g (s, n)
+          div ! class_ (stringValue "groupleft") $ a
+          div ! class_ (stringValue "groupright") $ b
         flipGroup (Group _ A) x = x
         flipGroup (Group _ B) (x, y) = (y, x)
 
