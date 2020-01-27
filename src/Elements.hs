@@ -285,10 +285,10 @@ barium = Element $ CommonElement {
     , mass = Atomic 137.3
     , resist = Exactly 0.89
   }
-quicksilver = Element $ CommonElement {
+mercury = Element $ CommonElement {
       number = 80
     , symbol = "Hg"
-    , name = "Quicksilver"
+    , name = "Mercury"
     , desc = "N/A"
     , conf = D
     , group = Group 2 A
@@ -322,20 +322,10 @@ copernicium = Element $ CommonElement {
     , resist = Unknown
   }
 
-
-
-
-
-
-
-
-
-
-
-bohr = Element $ CommonElement {
+boron = Element $ CommonElement {
       number = 5
     , symbol = "B"
-    , name = "Bohr"
+    , name = "Boron"
     , desc = "N/A"
     , conf = P
     , group = Group 3 A
