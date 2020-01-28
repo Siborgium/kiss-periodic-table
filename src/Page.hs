@@ -137,8 +137,11 @@ instance ToMarkup Element where
     sub $ toHtml $ if n == 1 then "" else show n
     toHtml "O"
     sub $ toHtml $ if m == 1 then "" else show m
-  toMarkup HydroCompound = html $ eSpec $ toHtml "RnHm"
+  toMarkup (Rh rv n_ m_) = html $ eSpec $ do
+    let rn = (toHtml "R") >> (toHtmlN n_)
+    let hm = (toHtml "H") >> (toHtmlN m_)
+    if rv then rn >> hm else hm >> rn 
   toMarkup Placeholder = html $ toHtml "%"
   toMarkup Empty = html $ toHtml ""
 
-
+toHtmlN n = sub $ toHtml $ if n == 1 then "" else show n

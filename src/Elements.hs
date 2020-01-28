@@ -46,7 +46,7 @@ data CommonElement = CommonElement {
   , resist    :: Resist -- электроотрицательность
 } deriving (Show)
 
-data Element = Element CommonElement | HSpecial | Ro Int Int | HydroCompound | Placeholder | Empty
+data Element = Element CommonElement | HSpecial | Ro Int Int | Rh Bool Int Int | Placeholder | Empty
 
 hspecial = HSpecial
 
