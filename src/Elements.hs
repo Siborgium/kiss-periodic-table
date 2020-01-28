@@ -347,8 +347,113 @@ boron = Element $ CommonElement {
     , conf = P
     , group = Group 3 A
     , period = Period 2
-    , radius = Angstrom 0.529177
+    , radius = Angstrom 1.8
     , mass = Atomic 2.04
     , resist = Exactly 10.8
   }
+
+aluminium = Element $ CommonElement {
+      number = 13
+    , symbol = "Al"
+    , name = "Aluminium"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 3 A
+    , period = Period 3
+    , radius = Angstrom 1.84
+    , mass = Atomic 27.0
+    , resist = Exactly 1.61
+}
+
+scandium = Element $ CommonElement {
+      number = 21
+    , symbol = "Sc"
+    , name = "Scandium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 3 B
+    , period = Period 4
+    , radius = Angstrom 2.30
+    , mass = Atomic 45.0
+    , resist = Exactly 1.36
+}
+gallium = Element $ CommonElement {
+      number = 31
+    , symbol = "Ga"
+    , name = "Gallium"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 3 A
+    , period = Period 4
+    , radius = Angstrom 1.87
+    , mass = Atomic 69.7
+    , resist = Exactly 1.81
+}
+
+yttrium = Element $ CommonElement {
+      number = 39
+    , symbol = "Y"
+    , name = "Yttrium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 3 B
+    , period = Period 5
+    , radius = Angstrom 2.4
+    , mass = Atomic 88.9
+    , resist = Exactly 1.22
+}
+indium = Element $ CommonElement {
+      number = 49
+    , symbol = "In"
+    , name = "Indium"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 3 A
+    , period = Period 5
+    , radius = Angstrom 2.20
+    , mass = Atomic 114.8
+    , resist = Exactly 1.78
+}
+lanthanum = Element $ CommonElement {
+      number = 57
+    , symbol = "La"
+    , name = "Lanthanum"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 3 B
+    , period = Period 6
+    , radius = Angstrom 2.50
+    , mass = Atomic 138.9
+    , resist = Exactly 1.10
+}
+thallium = Element $ CommonElement {
+      number = 81
+    , symbol = "Tl"
+    , name = "Thallium"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 3 A
+    , period = Period 6
+    , radius = Angstrom 2.20
+    , mass = Atomic 204.4
+    , resist = Exactly 1.62
+}
+actinium = Element $ CommonElement {
+      number = 89
+    , symbol = "Ac"
+    , name = "Actinium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 3 B
+    , period = Period 7
+    , radius = Angstrom 2.00
+    , mass = Changing 227.0
+    , resist = Exactly 1.10
+}
+
+
+
+
+
+
 

@@ -1,4 +1,4 @@
-# kiss-periodic-table (WIP)
+# KISS Periodic Table (WIP)
 
 Generates simple periodic table.
 
