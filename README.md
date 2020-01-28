@@ -9,7 +9,7 @@ $ cd kiss-periodic-table
 $ stack run
 ```
 
-Use the HTML viewer of choice to open the file you generated.
+Use the HTML viewer of choice to open the file you generated, or view the latest version [here](https://siborgium.github.io/kiss-periodic-table/).
 
 ## TODO
 
