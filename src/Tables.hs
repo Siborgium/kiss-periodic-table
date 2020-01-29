@@ -38,12 +38,12 @@ oldTable = [
 modernTable :: [[Element]]
 modernTable = [
   [hydrogen, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, helium],
-  [],
-  [],
-  [],
-  [],
-  [],
-  []]
+  [lithium, beryllium, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, boron, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder],
+  [sodium, magnesium, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, Empty, aluminium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder],
+  [potassium, calcium, scandium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, copper, zinc, gallium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder],
+  [Placeholder, strontium, yttrium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, silver, cadmium, indium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder],
+  [cesium, barium, lanthanum, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, mercury, thallium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder],
+  [francium, radium, actinium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, roentgenium, copernicium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder]]
 
 lanthanides = [cerium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder];
 actinides = [thorium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder];
