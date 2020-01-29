@@ -158,7 +158,7 @@ silver = Element $ CommonElement {
     , mass = Atomic 1.93
     , electroNegativity = Just 107.9
   }
-cesium = Element $ CommonElement {
+caesium = Element $ CommonElement {
       number = 55
     , symbol = "Cs"
     , name = "Cesium"
@@ -487,6 +487,132 @@ actinium = Element $ CommonElement {
     , mass = Varying 227.0
     , electroNegativity = Just 1.10
 }
+carbon = Element $ CommonElement {
+      number = 6
+    , symbol = "C"
+    , name = "Carbon"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 4 A
+    , period = Period 2
+    , state = Solid
+    , radius = Angstrom 1.70
+    , mass = Atomic 12.0
+    , electroNegativity = Just 2.55
+}
+silicon = Element $ CommonElement {
+      number = 14
+    , symbol = "Si"
+    , name = "Silicon"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 4 A
+    , period = Period 3
+    , state = Solid
+    , radius = Angstrom 2.10
+    , mass = Atomic 28.1
+    , electroNegativity = Just 1.90
+}
+titanium = Element $ CommonElement {
+      number = 22
+    , symbol = "Ti"
+    , name = "Titanium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 4 B
+    , period = Period 4
+    , state = Solid
+    , radius = Angstrom 2.15
+    , mass = Atomic 47.9
+    , electroNegativity = Just 1.54
+}
+germanium = Element $ CommonElement {
+      number = 32
+    , symbol = "Ge"
+    , name = "Germanium"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 4 A
+    , period = Period 4
+    , state = Solid
+    , radius = Angstrom 2.11
+    , mass = Atomic 72.6
+    , electroNegativity = Just 2.01
+}
+zirconium = Element $ CommonElement {
+      number = 40
+    , symbol = "Zr"
+    , name = "Zirconium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 4 B
+    , period = Period 5
+    , state = Solid
+    , radius = Angstrom 1.6
+    , mass = Atomic 91.2
+    , electroNegativity = Just 1.33
+}
+tin = Element $ CommonElement {
+      number = 50
+    , symbol = "Sn"
+    , name = "Tin"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 4 A
+    , period = Period 5
+    , state = Solid
+    , radius = Angstrom 2.25
+    , mass = Atomic 118.7
+    , electroNegativity = Just 1.96
+}
+hafnium = Element $ CommonElement {
+      number = 72
+    , symbol = "Hf"
+    , name = "Hafnium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 4 B
+    , period = Period 6
+    , state = Solid
+    , radius = Angstrom 2.25
+    , mass = Atomic 178.5
+    , electroNegativity = Just 1.30
+}
+lead = Element $ CommonElement {
+      number = 82
+    , symbol = "Pb"
+    , name = "Lead"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 4 A
+    , period = Period 6
+    , state = Solid
+    , radius = Angstrom 2.02
+    , mass = Atomic 207.2
+    , electroNegativity = Just 2.33
+}
+rutherfordium = Element $ CommonElement {
+      number = 104
+    , symbol = "Rf"
+    , name = "Rutherfordium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 4 B
+    , period = Period 7
+    , state = Solid
+    , radius = Angstrom 2.00
+    , mass = Varying 265.0
+    , electroNegativity = Nothing
+}
+
+
+
+
+
+
+
+
+
 
 
 
