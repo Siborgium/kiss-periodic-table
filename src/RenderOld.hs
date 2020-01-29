@@ -25,6 +25,8 @@ import Text.Blaze.Html5.Attributes as A
 import Elements as E
 import Table(actinides, lanthanides, table) 
 
+data OElement = O E.Element
+
 page :: String -> Html
 page title = docTypeHtml $ do
   H.head $ do
@@ -49,7 +51,7 @@ rowHead :: String -> Html
 rowHead = th . toHtml
 
 rowData :: [Element] -> Html
-rowData d = forM_ d $ \t -> td ! elemClass t $ toHtml t
+rowData d = forM_ d $ \t -> td ! elemClass t $ toHtml $ O t
 
 eSym :: Html -> Html
 eSym = div ! class_ (stringValue "symbol")
@@ -107,17 +109,6 @@ period r h = case r of
   where periodWideImpl n i = (th ! (rowspan $ stringValue $ show i) $ toHtml n) >> h
         periodSingleImpl n = (th $ toHtml n) >> h
 
-instance ToMarkup E.ElectroNegativity where
-  toMarkup t = html $ toHtml $ show t
-
-instance ToMarkup CommonElement where
-  toMarkup t = html $ do
-    div ! class_ (stringValue "symbol-number") $ markCommonElemTitle t
-    div ! class_ (stringValue "mass-resist") $ do
-      div ! class_ (stringValue "mass") $ toHtml $ show $ E.mass t 
-      div ! class_ (stringValue "resist") $ toHtml $ E.electroNegativity t
-    eName $ toHtml $ E.name t
-
 markCommonElemTitle :: CommonElement -> Html
 markCommonElemTitle e = implMark (E.group e) (E.symbol e, E.number e)
   where implMark g (s_, n_) = do
@@ -129,19 +120,25 @@ markCommonElemTitle e = implMark (E.group e) (E.symbol e, E.number e)
         flipGroup (Group _ A) x = x
         flipGroup (Group _ B) (x, y) = (y, x)
 
-instance ToMarkup Element where
-  toMarkup (Element e) = toMarkup e
-  toMarkup HSpecial = html $ eSpec $ toHtml "{H}"
-  toMarkup (Ro n m) = html $ eSpec $ do
-    toHtml "R"
-    toHtmlN n
-    toHtml "O"
-    toHtmlN m
-  toMarkup (Rh rv n_ m_) = html $ eSpec $ do
-    let rn = (toHtml "R") >> (toHtmlN n_)
-    let hm = (toHtml "H") >> (toHtmlN m_)
-    if rv then rn >> hm else hm >> rn 
-  toMarkup Placeholder = html $ toHtml "%"
-  toMarkup Empty = html $ toHtml ""
+instance ToMarkup OElement where
+  toMarkup (O e) = implToMarkup e
+    where implToMarkup (Element t) = html $ do
+            div ! class_ (stringValue "symbol-number") $ markCommonElemTitle t
+            div ! class_ (stringValue "mass-resist") $ do
+              div ! class_ (stringValue "mass") $ toHtml $ show $ E.mass t 
+              div ! class_ (stringValue "resist") $ toHtml $ show $ E.electroNegativity t
+            eName $ toHtml $ E.name t 
+          implToMarkup HSpecial = html $ eSpec $ toHtml "{H}"
+          implToMarkup (Ro n m) = html $ eSpec $ do
+            toHtml "R"
+            toHtmlN n
+            toHtml "O"
+            toHtmlN m
+          implToMarkup (Rh rv n_ m_) = html $ eSpec $ do
+            let rn = (toHtml "R") >> (toHtmlN n_)
+            let hm = (toHtml "H") >> (toHtmlN m_)
+            if rv then rn >> hm else hm >> rn 
+          implToMarkup Placeholder = html $ toHtml "%"
+          implToMarkup Empty = html $ toHtml ""
 
 toHtmlN n = sub $ toHtml $ if n == 1 then "" else show n
