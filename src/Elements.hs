@@ -17,21 +17,24 @@
 
 module Elements where
 
+import Prelude hiding (Just, Nothing, Maybe)
+
 data ValentElectrons = S | P | D | F deriving (Show)
 data Period = Period Int deriving (Eq, Ord, Show)
 data GroupClass = A | B deriving (Show)
 data Group = Group Int GroupClass deriving (Show)
 data Radius = Angstrom Float deriving (Show)
-data Resist = Exactly Float | Unknown
-data Mass = Atomic Float | Changing Float deriving (Eq)
+data ElectroNegativity = Just Float | Nothing
+data Mass = Atomic Float | Varying Float deriving (Eq)
+data State = Gas | Solid | Liquid | Unknown deriving (Show)
 
-instance Show Resist where
-  show r = case r of Exactly f -> (show f)
-                     Unknown -> ""
+instance Show ElectroNegativity where
+  show r = case r of Just f -> (show f)
+                     Nothing -> ""
 
 instance Show Mass where 
   show (Atomic m) = show m
-  show (Changing m) = "[" ++ (show m) ++ "]"
+  show (Varying m) = "[" ++ (show m) ++ "]"
 
 data CommonElement = CommonElement { 
     number    :: Int
@@ -41,9 +44,10 @@ data CommonElement = CommonElement {
   , conf      :: ValentElectrons
   , group     :: Group
   , period    :: Period
+  , state     :: State
   , radius    :: Radius
   , mass      :: Mass
-  , resist    :: Resist -- электроотрицательность
+  , electroNegativity    :: ElectroNegativity -- электроотрицательность
 } deriving (Show)
 
 data Element = Element CommonElement | HSpecial | Ro Int Int | Rh Bool Int Int | Placeholder | Empty
@@ -58,9 +62,10 @@ hydrogen = Element $ CommonElement {
      , conf = S
      , group = Group 1 A
      , period = Period 1
+     , state = Gas
      , radius = Angstrom 0.53
      , mass = Atomic 1.01
-     , resist = Exactly 2.10
+     , electroNegativity = Just 2.10
    }
 helium = Element $ CommonElement {
        number = 2
@@ -70,9 +75,10 @@ helium = Element $ CommonElement {
      , conf = S
      , group = Group 8 A
      , period = Period 1
+     , state = Gas
      , radius = Angstrom 0.31
      , mass = Atomic 4.0
-     , resist = Unknown
+     , electroNegativity = Nothing
    }
 lithium = Element $ CommonElement {
       number = 3
@@ -82,21 +88,23 @@ lithium = Element $ CommonElement {
     , conf = S
     , group = Group 1 A
     , period = Period 2
+    , state = Solid
     , radius = Angstrom 1.82
     , mass = Atomic 6.9
-    , resist = Exactly 0.98
+    , electroNegativity = Just 0.98
   }
-natrium = Element $ CommonElement {
+sodium = Element $ CommonElement {
       number = 11
     , symbol = "Na"
-    , name = "Natrium"
+    , name = "Sodium"
     , desc = "N/A"
     , conf = S
     , group = Group 1 A
     , period = Period 3
+    , state = Solid
     , radius = Angstrom 2.27
     , mass = Atomic 23.0
-    , resist = Exactly 0.98
+    , electroNegativity = Just 0.98
   }
 potassium = Element $ CommonElement {
       number = 19
@@ -106,9 +114,10 @@ potassium = Element $ CommonElement {
     , conf = S
     , group = Group 1 A
     , period = Period 4
+    , state = Solid
     , radius = Angstrom 2.8
     , mass = Atomic 39.1
-    , resist = Exactly 0.82
+    , electroNegativity = Just 0.82
   }
 copper = Element $ CommonElement {
       number = 29
@@ -118,9 +127,10 @@ copper = Element $ CommonElement {
     , conf = D
     , group = Group 1 B
     , period = Period 4
+    , state = Solid
     , radius = Angstrom 1.4
     , mass = Atomic 1.90
-    , resist = Exactly 63.5
+    , electroNegativity = Just 63.5
   }
 rubidium = Element $ CommonElement {
       number = 37
@@ -130,9 +140,10 @@ rubidium = Element $ CommonElement {
     , conf = S
     , group = Group 1 A
     , period = Period 5
+    , state = Solid
     , radius = Angstrom 2.9
     , mass = Atomic 85.5
-    , resist = Exactly 0.82
+    , electroNegativity = Just 0.82
   }
 silver = Element $ CommonElement {
       number = 47
@@ -142,9 +153,10 @@ silver = Element $ CommonElement {
     , conf = D
     , group = Group 1 B
     , period = Period 5
+    , state = Solid
     , radius = Angstrom 2.9
     , mass = Atomic 1.93
-    , resist = Exactly 107.9
+    , electroNegativity = Just 107.9
   }
 cesium = Element $ CommonElement {
       number = 55
@@ -154,9 +166,10 @@ cesium = Element $ CommonElement {
     , conf = S
     , group = Group 1 A
     , period = Period 6
+    , state = Solid
     , radius = Angstrom 3.43
     , mass = Atomic 132.9
-    , resist = Exactly 0.79
+    , electroNegativity = Just 0.79
   }
 gold = Element $ CommonElement {
       number = 79
@@ -166,9 +179,10 @@ gold = Element $ CommonElement {
     , conf = D
     , group = Group 1 B
     , period = Period 5
+    , state = Solid
     , radius = Angstrom 2.9
     , mass = Atomic 197.0
-    , resist = Exactly 2.54
+    , electroNegativity = Just 2.54
   }
 francium = Element $ CommonElement {
       number = 87
@@ -178,9 +192,10 @@ francium = Element $ CommonElement {
     , conf = S
     , group = Group 1 A
     , period = Period 5
+    , state = Solid
     , radius = Angstrom 2.9
-    , mass = Changing 223.0
-    , resist = Exactly 0.70
+    , mass = Varying 223.0
+    , electroNegativity = Just 0.70
   }
 roentgenium = Element $ CommonElement {
       number = 111
@@ -190,9 +205,10 @@ roentgenium = Element $ CommonElement {
     , conf = D
     , group = Group 1 B
     , period = Period 5
+    , state = Unknown
     , radius = Angstrom 2.9
-    , mass = Changing 281.0
-    , resist = Unknown
+    , mass = Varying 281.0
+    , electroNegativity = Nothing
   }
 cerium = Element $ CommonElement {
       number = 58
@@ -202,9 +218,10 @@ cerium = Element $ CommonElement {
     , conf = F
     , group = Group 1 A
     , period = Period 5
+    , state = Solid
     , radius = Angstrom 2.9
     , mass = Atomic 140.1
-    , resist = Exactly 1.12
+    , electroNegativity = Just 1.12
   }
 thorium = Element $ CommonElement {
       number = 90
@@ -214,9 +231,10 @@ thorium = Element $ CommonElement {
     , conf = F
     , group = Group 1 A
     , period = Period 5
+    , state = Solid
     , radius = Angstrom 2.9
     , mass = Atomic 232.0
-    , resist = Exactly 1.30
+    , electroNegativity = Just 1.30
   }
 beryllium = Element $ CommonElement {
       number = 4
@@ -226,9 +244,10 @@ beryllium = Element $ CommonElement {
     , conf = S
     , group = Group 2 A
     , period = Period 2
+    , state = Solid
     , radius = Angstrom 1.53
     , mass = Atomic 9.0
-    , resist = Exactly 1.57
+    , electroNegativity = Just 1.57
   }
 magnesium = Element $ CommonElement {
       number = 12
@@ -238,9 +257,10 @@ magnesium = Element $ CommonElement {
     , conf = S
     , group = Group 2 A
     , period = Period 3
+    , state = Solid
     , radius = Angstrom 1.73
     , mass = Atomic 24.3
-    , resist = Exactly 1.31
+    , electroNegativity = Just 1.31
   }
 calcium = Element $ CommonElement {
       number = 20
@@ -250,9 +270,10 @@ calcium = Element $ CommonElement {
     , conf = S
     , group = Group 2 A
     , period = Period 4
+    , state = Solid
     , radius = Angstrom 2.9
     , mass = Atomic 40.1
-    , resist = Exactly 1.00
+    , electroNegativity = Just 1.00
   }
 zinc = Element $ CommonElement {
       number = 30
@@ -262,9 +283,10 @@ zinc = Element $ CommonElement {
     , conf = D
     , group = Group 2 B
     , period = Period 4
+    , state = Solid
     , radius = Angstrom 1.39
     , mass = Atomic 65.4
-    , resist = Exactly 1.65
+    , electroNegativity = Just 1.65
   }
 strontium = Element $ CommonElement {
       number = 38
@@ -274,9 +296,10 @@ strontium = Element $ CommonElement {
     , conf = S
     , group = Group 2 A
     , period = Period 5
+    , state = Solid
     , radius = Angstrom 2.55
     , mass = Atomic 87.6
-    , resist = Exactly 0.95
+    , electroNegativity = Just 0.95
   }
 cadmium = Element $ CommonElement {
       number = 48
@@ -286,9 +309,10 @@ cadmium = Element $ CommonElement {
     , conf = D
     , group = Group 2 B
     , period = Period 5
+    , state = Solid
     , radius = Angstrom 2.9
     , mass = Atomic 112.4
-    , resist = Exactly 1.58
+    , electroNegativity = Just 1.58
   }
 barium = Element $ CommonElement {
       number = 56
@@ -298,9 +322,10 @@ barium = Element $ CommonElement {
     , conf = S
     , group = Group 2 A
     , period = Period 6
+    , state = Solid
     , radius = Angstrom 2.68
     , mass = Atomic 137.3
-    , resist = Exactly 0.89
+    , electroNegativity = Just 0.89
   }
 mercury = Element $ CommonElement {
       number = 80
@@ -310,9 +335,10 @@ mercury = Element $ CommonElement {
     , conf = D
     , group = Group 2 B
     , period = Period 6
+    , state = Liquid
     , radius = Angstrom 1.55
     , mass = Atomic 200.6
-    , resist = Exactly 2.00
+    , electroNegativity = Just 2.00
   }
 radium = Element $ CommonElement {
       number = 88
@@ -322,9 +348,10 @@ radium = Element $ CommonElement {
     , conf = S
     , group = Group 2 A
     , period = Period 7
+    , state = Solid
     , radius = Angstrom 2.00
-    , mass = Changing 226
-    , resist = Exactly 0.90
+    , mass = Varying 226
+    , electroNegativity = Just 0.90
   }
 copernicium = Element $ CommonElement {
       number = 112
@@ -334,9 +361,10 @@ copernicium = Element $ CommonElement {
     , conf = D
     , group = Group 2 B
     , period = Period 7
+    , state = Unknown
     , radius = Angstrom 1.47
-    , mass = Changing 285
-    , resist = Unknown
+    , mass = Varying 285
+    , electroNegativity = Nothing
   }
 
 boron = Element $ CommonElement {
@@ -347,9 +375,10 @@ boron = Element $ CommonElement {
     , conf = P
     , group = Group 3 A
     , period = Period 2
+    , state = Solid
     , radius = Angstrom 1.8
     , mass = Atomic 2.04
-    , resist = Exactly 10.8
+    , electroNegativity = Just 10.8
   }
 
 aluminium = Element $ CommonElement {
@@ -360,9 +389,10 @@ aluminium = Element $ CommonElement {
     , conf = P
     , group = Group 3 A
     , period = Period 3
+    , state = Solid
     , radius = Angstrom 1.84
     , mass = Atomic 27.0
-    , resist = Exactly 1.61
+    , electroNegativity = Just 1.61
 }
 
 scandium = Element $ CommonElement {
@@ -373,9 +403,10 @@ scandium = Element $ CommonElement {
     , conf = D
     , group = Group 3 B
     , period = Period 4
+    , state = Solid
     , radius = Angstrom 2.30
     , mass = Atomic 45.0
-    , resist = Exactly 1.36
+    , electroNegativity = Just 1.36
 }
 gallium = Element $ CommonElement {
       number = 31
@@ -385,9 +416,10 @@ gallium = Element $ CommonElement {
     , conf = P
     , group = Group 3 A
     , period = Period 4
+    , state = Solid
     , radius = Angstrom 1.87
     , mass = Atomic 69.7
-    , resist = Exactly 1.81
+    , electroNegativity = Just 1.81
 }
 
 yttrium = Element $ CommonElement {
@@ -398,9 +430,10 @@ yttrium = Element $ CommonElement {
     , conf = D
     , group = Group 3 B
     , period = Period 5
+    , state = Solid
     , radius = Angstrom 2.4
     , mass = Atomic 88.9
-    , resist = Exactly 1.22
+    , electroNegativity = Just 1.22
 }
 indium = Element $ CommonElement {
       number = 49
@@ -410,9 +443,10 @@ indium = Element $ CommonElement {
     , conf = P
     , group = Group 3 A
     , period = Period 5
+    , state = Solid
     , radius = Angstrom 2.20
     , mass = Atomic 114.8
-    , resist = Exactly 1.78
+    , electroNegativity = Just 1.78
 }
 lanthanum = Element $ CommonElement {
       number = 57
@@ -422,9 +456,10 @@ lanthanum = Element $ CommonElement {
     , conf = D
     , group = Group 3 B
     , period = Period 6
+    , state = Solid
     , radius = Angstrom 2.50
     , mass = Atomic 138.9
-    , resist = Exactly 1.10
+    , electroNegativity = Just 1.10
 }
 thallium = Element $ CommonElement {
       number = 81
@@ -434,9 +469,10 @@ thallium = Element $ CommonElement {
     , conf = P
     , group = Group 3 A
     , period = Period 6
+    , state = Solid
     , radius = Angstrom 2.20
     , mass = Atomic 204.4
-    , resist = Exactly 1.62
+    , electroNegativity = Just 1.62
 }
 actinium = Element $ CommonElement {
       number = 89
@@ -446,9 +482,10 @@ actinium = Element $ CommonElement {
     , conf = D
     , group = Group 3 B
     , period = Period 7
+    , state = Solid
     , radius = Angstrom 2.00
-    , mass = Changing 227.0
-    , resist = Exactly 1.10
+    , mass = Varying 227.0
+    , electroNegativity = Just 1.10
 }
 
 

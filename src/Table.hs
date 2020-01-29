@@ -22,7 +22,7 @@ import Elements
 table :: [[Element]]
 table = [[hydrogen,    Empty,       Empty, Empty, Empty, Empty, hspecial, helium, Empty, Empty],
          [lithium,     beryllium,   boron, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Empty, Empty],
-         [natrium,     magnesium,   aluminium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Empty, Empty],
+         [sodium,      magnesium,   aluminium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Empty, Empty],
          [potassium,   calcium,     scandium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder],
          [copper,      zinc,        gallium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Empty, Empty],
          [rubidium,    strontium,   yttrium, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder, Placeholder],

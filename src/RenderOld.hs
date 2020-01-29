@@ -15,20 +15,20 @@
 -- You should have received a copy of the GNU General Public License
 -- along with kiss-periodic-table. If not, see <https:-- www.gnu.org/licenses/>.
 
-module Page where
+module RenderOld(page) where
 
 import Control.Monad (forM_)
 import Prelude hiding (div, span)
 import Text.Blaze.Html5 as H
 import Text.Blaze.Html5.Attributes as A
 
-import Elements as T
+import Elements as E
 import Table(actinides, lanthanides, table) 
 
-page :: Html
-page = docTypeHtml $ do
+page :: String -> Html
+page title = docTypeHtml $ do
   H.head $ do
-    H.title $ toHtml "Periodic table"
+    H.title $ toHtml title
     H.style $ css
   body $ do
     h2 $ toHtml "Periodic table"
@@ -37,7 +37,7 @@ page = docTypeHtml $ do
         rowHead ""
         forM_ groups groupName -- draw groups
       forM_ (zip Table.table rowIndices) $ \(row, r) -> do
-        tr $ Page.period r $ rowData row
+        tr $ RenderOld.period r $ rowData row
     br
     H.table $ do
       row "Lanthanides" lanthanides
@@ -76,7 +76,7 @@ css = toHtml $ "html{font:small sans-serif}\
                 \.spec{font-weight:bold;font-size:normal;text-align:center}"
 
 elemClass :: Element -> Attribute
-elemClass (Element t) = class_ (confAttr $ T.conf t)
+elemClass (Element t) = class_ (confAttr $ E.conf t)
 elemClass HSpecial = class_ (stringValue "sconfgroup")
 elemClass _ = class_ $ stringValue "placeholderClass"
 
@@ -107,19 +107,19 @@ period r h = case r of
   where periodWideImpl n i = (th ! (rowspan $ stringValue $ show i) $ toHtml n) >> h
         periodSingleImpl n = (th $ toHtml n) >> h
 
-instance ToMarkup T.Resist where
+instance ToMarkup E.ElectroNegativity where
   toMarkup t = html $ toHtml $ show t
 
 instance ToMarkup CommonElement where
   toMarkup t = html $ do
     div ! class_ (stringValue "symbol-number") $ markCommonElemTitle t
     div ! class_ (stringValue "mass-resist") $ do
-      div ! class_ (stringValue "mass") $ toHtml $ show $ T.mass t 
-      div ! class_ (stringValue "resist") $ toHtml $ T.resist t
-    eName $ toHtml $ T.name t
+      div ! class_ (stringValue "mass") $ toHtml $ show $ E.mass t 
+      div ! class_ (stringValue "resist") $ toHtml $ E.electroNegativity t
+    eName $ toHtml $ E.name t
 
 markCommonElemTitle :: CommonElement -> Html
-markCommonElemTitle e = implMark (T.group e) (T.symbol e, T.number e)
+markCommonElemTitle e = implMark (E.group e) (E.symbol e, E.number e)
   where implMark g (s_, n_) = do
           let s = toHtml s_
           let n = H.span ! class_ (stringValue "number") $ toHtml n_
@@ -134,9 +134,9 @@ instance ToMarkup Element where
   toMarkup HSpecial = html $ eSpec $ toHtml "{H}"
   toMarkup (Ro n m) = html $ eSpec $ do
     toHtml "R"
-    sub $ toHtml $ if n == 1 then "" else show n
+    toHtmlN n
     toHtml "O"
-    sub $ toHtml $ if m == 1 then "" else show m
+    toHtmlN m
   toMarkup (Rh rv n_ m_) = html $ eSpec $ do
     let rn = (toHtml "R") >> (toHtmlN n_)
     let hm = (toHtml "H") >> (toHtmlN m_)
