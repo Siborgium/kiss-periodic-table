@@ -1,3 +1,4 @@
+
 -- Copyright 2020 Sergey Smirnykh
 
 -- This file is part of kiss-periodic-table
@@ -15,20 +16,21 @@
 -- You should have received a copy of the GNU General Public License
 -- along with kiss-periodic-table. If not, see <https:-- www.gnu.org/licenses/>.
 
-module Main where
+module RenderModern(page) where
 
-import Data.ByteString.Lazy (writeFile)
-import Prelude hiding (writeFile)
-import System.Environment(getArgs)
-import System.IO(IOMode(WriteMode), withFile)
-import Text.Blaze.Renderer.Utf8 (renderMarkup)
+import Control.Monad (forM_)
+import Prelude hiding (div, span)
+import Text.Blaze.Html5 as H
+import Text.Blaze.Html5.Attributes as A
 
-import RenderOld as O
-import RenderModern as M
+import Elements as E
+import Tables(actinides, lanthanides, modernTable) 
 
-main :: IO ()
-main = do
-  args <- getArgs
-  let p = if null args then "index.html" else head args
-  putStrLn $ "Writing to " ++ p
-  writeFile p $ renderMarkup $ O.page "Periodic table"
+data MElement = M E.Element
+
+page :: String -> Html
+page title = docTypeHtml $ do
+  H.head $ do
+    H.title $ toHtml title
+  H.body $ do
+    toHtml "Placeholder for now"

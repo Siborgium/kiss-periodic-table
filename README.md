@@ -13,5 +13,5 @@ Use the HTML viewer of choice to open the file you generated, or view the latest
 
 ## TODO
 
-Generate both old 8-column table and modern 32-column table.
+Generate both old 8-column table and modern 18-column table.
 Provide additional information about each element.

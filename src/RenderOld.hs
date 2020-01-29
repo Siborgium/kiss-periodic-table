@@ -23,7 +23,7 @@ import Text.Blaze.Html5 as H
 import Text.Blaze.Html5.Attributes as A
 
 import Elements as E
-import Table(actinides, lanthanides, table) 
+import Tables(actinides, lanthanides, oldTable) 
 
 data OElement = O E.Element
 
@@ -38,7 +38,7 @@ page title = docTypeHtml $ do
       tr $ do
         rowHead ""
         forM_ groups groupName -- draw groups
-      forM_ (zip Table.table rowIndices) $ \(row, r) -> do
+      forM_ (zip oldTable rowIndices) $ \(row, r) -> do
         tr $ RenderOld.period r $ rowData row
     br
     H.table $ do
