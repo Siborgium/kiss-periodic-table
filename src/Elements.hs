@@ -599,24 +599,127 @@ rutherfordium = Element $ CommonElement {
     , conf = D
     , group = Group 4 B
     , period = Period 7
-    , state = Solid
+    , state = Unknown
     , radius = Angstrom 2.00
     , mass = Varying 265.0
     , electroNegativity = Nothing
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- 5 group
+nitrogen = Element $ CommonElement {
+      number = 7
+    , symbol = "N"
+    , name = "Nitrogen"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 5 A
+    , period = Period 2
+    , state = Gas
+    , radius = Angstrom 2.00
+    , mass = Atomic 14.0
+    , electroNegativity = Just 3.04
+}
+phosphorus = Element $ CommonElement {
+      number = 15
+    , symbol = "P"
+    , name = "Phosphorus"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 5 A
+    , period = Period 3
+    , state = Solid
+    , radius = Angstrom 2.00
+    , mass = Atomic 31.0
+    , electroNegativity = Just 2.19
+}
+vanadium = Element $ CommonElement {
+      number = 23
+    , symbol = "V"
+    , name = "Vanadium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 5 B
+    , period = Period 4
+    , state = Solid
+    , radius = Angstrom 2.00
+    , mass = Atomic 50.9
+    , electroNegativity = Just 1.63 
+}
+arsenic = Element $ CommonElement {
+      number = 33
+    , symbol = "As"
+    , name = "Arsenic"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 5 A
+    , period = Period 4
+    , state = Solid
+    , radius = Angstrom 2.00
+    , mass = Atomic 74.9
+    , electroNegativity = Just 2.18
+}
+niobium = Element $ CommonElement {
+      number = 41
+    , symbol = "Nb"
+    , name = "Niobium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 5 B
+    , period = Period 5
+    , state = Solid
+    , radius = Angstrom 2.00
+    , mass = Atomic 92.9
+    , electroNegativity = Just 1.60
+}
+antimony = Element $ CommonElement {
+      number = 51
+    , symbol = "Sb"
+    , name = "Antimony"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 5 A
+    , period = Period 5
+    , state = Solid
+    , radius = Angstrom 2.00
+    , mass = Atomic 121.8
+    , electroNegativity = Just 2.05
+}
+tantalum = Element $ CommonElement {
+      number = 73
+    , symbol = "Ta"
+    , name = "Tantalum"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 5 B
+    , period = Period 6
+    , state = Solid
+    , radius = Angstrom 2.00
+    , mass = Atomic 180.9
+    , electroNegativity = Just 1.50
+}
+bismuth = Element $ CommonElement {
+      number = 83
+    , symbol = "Bi"
+    , name = "Bismuth"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 5 A
+    , period = Period 6
+    , state = Solid
+    , radius = Angstrom 2.00
+    , mass = Atomic 209.0
+    , electroNegativity = Just 2.02
+}
+dubnium = Element $ CommonElement {
+      number = 105
+    , symbol = "Db"
+    , name = "Dubnium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 5 B
+    , period = Period 7
+    , state = Unknown
+    , radius = Angstrom 2.00
+    , mass = Varying 268.0
+    , electroNegativity = Nothing
+}
 
