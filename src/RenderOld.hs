@@ -109,24 +109,12 @@ period r h = case r of
   where periodWideImpl n i = (th ! (rowspan $ stringValue $ show i) $ toHtml n) >> h
         periodSingleImpl n = (th $ toHtml n) >> h
 
-markCommonElemTitle :: CommonElement -> Html
-markCommonElemTitle e = implMark (E.group e) (E.symbol e, E.number e)
-  where implMark g (s_, n_) = do
-          let s = toHtml s_
-          let n = H.span ! class_ (stringValue "number") $ toHtml n_
-          let (a, b) = flipGroup g (s, n)
-          div ! class_ (stringValue "groupleft") $ a
-          div ! class_ (stringValue "groupright") $ b
-        flipGroup (Group _ A) x = x
-        flipGroup (Group _ B) (x, y) = (y, x)
 
 instance ToMarkup OElement where
   toMarkup (O e) = implToMarkup e
     where implToMarkup (Element t) = html $ do
             div ! class_ (stringValue "symbol-number") $ markCommonElemTitle t
-            div ! class_ (stringValue "mass-resist") $ do
-              div ! class_ (stringValue "mass") $ toHtml $ show $ E.mass t 
-              div ! class_ (stringValue "resist") $ toHtml $ show $ E.electroNegativity t
+            div ! class_ (stringValue "mass-resist") $ markCommonElemData t
             eName $ toHtml $ E.name t 
           implToMarkup HSpecial = html $ eSpec $ toHtml "{H}"
           implToMarkup (Ro n m) = html $ eSpec $ do
@@ -141,4 +129,29 @@ instance ToMarkup OElement where
           implToMarkup Placeholder = html $ toHtml "%"
           implToMarkup Empty = html $ toHtml ""
 
+markCommonElemTitle :: CommonElement -> Html
+markCommonElemTitle e = implMark (E.group e) (E.symbol e, E.number e)
+  where implMark g (s_, n_) = do
+          let s = toHtml s_
+          let n = H.span ! class_ (stringValue "number") $ toHtml n_
+          let (a, b) = flipGroup g (s, n)
+          div ! leftGroup $ a
+          div ! rightGroup $ b
+
 toHtmlN n = sub $ toHtml $ if n == 1 then "" else show n
+
+markCommonElemData :: CommonElement -> Html
+markCommonElemData e = implMark (E.group e) (E.mass e, E.electroNegativity e)
+  where implMark g (m_, r_) = do
+          let m = toHtml $ show m_
+          let r = toHtml $ show r_
+          let (a, b) = flipGroup g (m, r)
+          div ! leftGroup $ a
+          div ! rightGroup $ b
+         
+leftGroup = class_ (stringValue "groupleft")
+rightGroup = class_ (stringValue "groupright")
+
+flipGroup (Group _ A) x = x
+flipGroup (Group _ B) (x, y) = (y, x)
+
