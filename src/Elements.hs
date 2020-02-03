@@ -722,4 +722,130 @@ dubnium = Element $ CommonElement {
     , mass = Varying 268.0
     , electroNegativity = Nothing
 }
+-- Group 6
+oxygen = Element $ CommonElement {
+      number = 8
+    , symbol = "O"
+    , name = "Oxygen"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 6 A
+    , period = Period 6
+    , state = Gas
+    , radius = Angstrom 1.52
+    , mass = Atomic 16.0
+    , electroNegativity = Just 3.44
+}
+sulfur = Element $ CommonElement {
+      number = 16
+    , symbol = "S"
+    , name = "Sulfur"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 6 A
+    , period = Period 6
+    , state = Solid
+    , radius = Angstrom 1.8
+    , mass = Atomic 32.1
+    , electroNegativity = Just 2.58
+}
+chromium = Element $ CommonElement {
+      number = 24
+    , symbol = "Cr"
+    , name = "Chromium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 6 B
+    , period = Period 6
+    , state = Solid
+    , radius = Angstrom 2.00
+    , mass = Atomic 52.0
+    , electroNegativity = Just 1.66
+}
+selenium = Element $ CommonElement {
+      number = 34
+    , symbol = "Se"
+    , name = "Selenium"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 6 A
+    , period = Period 6
+    , state = Solid
+    , radius = Angstrom 1.90
+    , mass = Atomic 79.0
+    , electroNegativity = Just 2.55
+}
+molybdenum = Element $ CommonElement {
+      number = 42
+    , symbol = "Mo"
+    , name = "Molybdenum"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 6 B
+    , period = Period 6
+    , state = Solid
+    , radius = Angstrom 2.09
+    , mass = Atomic 95.9
+    , electroNegativity = Just 2.16
+}
+tellurium = Element $ CommonElement {
+      number = 52
+    , symbol = "Te"
+    , name = "Tellurium"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 6 A
+    , period = Period 6
+    , state = Solid
+    , radius = Angstrom 2.10
+    , mass = Atomic 127.6
+    , electroNegativity = Just 2.10
+}
+tungsten = Element $ CommonElement {
+      number = 74
+    , symbol = "W"
+    , name = "Tungsten"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 6 B
+    , period = Period 6
+    , state = Solid
+    , radius = Angstrom 2.10
+    , mass = Atomic 183.8
+    , electroNegativity = Just 2.36
+}
+polonium = Element $ CommonElement {
+      number = 84
+    , symbol = "Po"
+    , name = "Polonium"
+    , desc = "N/A"
+    , conf = P
+    , group = Group 6 A
+    , period = Period 6
+    , state = Solid
+    , radius = Angstrom 2.00
+    , mass = Varying 206.0
+    , electroNegativity = Just 2.00
+}
+seaborgium = Element $ CommonElement {
+      number = 106
+    , symbol = "Sg"
+    , name = "Seaborgium"
+    , desc = "N/A"
+    , conf = D
+    , group = Group 6 B
+    , period = Period 6
+    , state = Unknown
+    , radius = Angstrom 2.00
+    , mass = Varying 271.0
+    , electroNegativity = Nothing
+}
+
+
+
+
+
+
+
+
 
